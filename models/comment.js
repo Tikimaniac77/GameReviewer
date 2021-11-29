@@ -1,0 +1,57 @@
+const { Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/connection");
+
+class Comment extends Model {}
+
+Comment.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    commentTitle: {
+      type: DataTypes.STRING(25),
+      allowNull: false,
+      unique: true,
+    },
+    commentContent: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    gameRating: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    dateCreated: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "user",
+        key: "id",
+      },
+    },
+    gameId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "game",
+        key: "id",
+      },
+    },
+  },
+  {
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: "comment",
+  }
+);
+
+module.exports = Comment;
