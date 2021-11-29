@@ -1,4 +1,3 @@
-import sslRedirect from 'heroku-ssl-redirect';
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
@@ -18,8 +17,6 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-app.use(sslRedirect());
 
 
 const hbs = exphbs.create({
