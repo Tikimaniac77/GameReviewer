@@ -7,6 +7,7 @@ const routes = require("./routes/auth-route");
 const cookieSession = require("cookie-session");
 const controlRoutes = require("./controllers");
 const passportSetup = require("./config/passport-setup");
+const profileRoutes = require('./routes/profile-routes');
 const helpers = require("./utils/helpers");
 const http = require("./config/gamescript");
 require('dotenv').config
@@ -43,6 +44,10 @@ app.use(cookieSession({
   maxAge: 24*60*60*1000,
   keys: [ process.env.COOKIEKEY]
 }));
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(session(sess));
 app.use(express.static("public"));
