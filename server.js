@@ -2,11 +2,14 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-// const routes = require("./routes/auth-route");
+const passport = require("passport");
+const routes = require("./routes/auth-route");
+const cookieSession = require("cookie-session");
 const controlRoutes = require("./controllers");
-// const passportSetup = require("./config/passport-setup");
+const passportSetup = require("./config/passport-setup");
 const helpers = require("./utils/helpers");
 const http = require("./config/gamescript");
+require('dotenv').config
 
 const sequelize = require("./config/connection");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
@@ -35,6 +38,12 @@ const sess = {
   }),
 };
 
+app.use(cookieSession({
+  // To change how long the cookie lasts change the first number which is based on hours
+  maxAge: 24*60*60*1000,
+  keys: [ process.env.COOKIEKEY]
+}));
+
 app.use(session(sess));
 app.use(express.static("public"));
 
@@ -51,6 +60,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/public", express.static(path.join(__dirname, "/../public")));
 
 // app.use(routes);npm
+app.use("/auth", routes);
 app.use(controlRoutes);
 app.use(express(http));
 
