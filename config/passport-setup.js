@@ -9,9 +9,9 @@ require('dotenv').config
 //});
 
 //passport.deserializeUser((id, done) => {
-  //  GoogleUser.findById(id).then((user) => {
-   // done(null, user);
- // });
+    //GoogleUser.findById(id).then((user) => {
+   //done(null, user);
+  //});
 //});
 
 passport.use(
@@ -26,7 +26,7 @@ new GoogleStrategy({
         if(currentUser){
             // already have this user
             console.log('user is: ', currentUser);
-            done(null, currentUser);
+            //done(null, currentUser);
         } else {
             // if not, create user in our
             new GoogleUser({
@@ -34,7 +34,7 @@ new GoogleStrategy({
                 name: profile.displayName,
             }).save().then((newUser) => {
                 console.log('created new user: ', newUser);
-                done(null, newUser);
+                //done(null, newUser);
             });
         }
     });
