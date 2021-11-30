@@ -12,5 +12,5 @@ const authCheck = (req, res, next) => {
 
 router.get("/", authCheck, (req, res) => {
     // Redirect user to homepage
-    res.redirect("/homepage")
+    res.redirect("/")
 })
