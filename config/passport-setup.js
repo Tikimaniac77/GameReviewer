@@ -22,14 +22,14 @@ new GoogleStrategy({
     callbackURL: "/auth/google/redirect",
 }, (accessToken, refreshToken, profile, done) => {
     // TODO: Passport Callback Function
-    User.findOne({googleId: profile.id}).then((currentUser) => {
+    User.findOne({id: profile.id}).then((currentUser) => {
         if(currentUser){
             // already have this user
             console.log('user is: ', currentUser);
             done(null, currentUser);
         } else {
             // if not, create user in our
-            new GoogleUser({
+            new User({
                 name: profile.displayName,
                 email: profile.email,
                 password: profile.id
