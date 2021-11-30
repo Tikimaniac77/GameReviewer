@@ -4,15 +4,15 @@ const GoogleUser = require ("../models/user")
 //const sequelize = require("../config/connection");
 require('dotenv').config
 
-//passport.serializeUser((user, done) => {
- //done(null, user.id);
-//});
+passport.serializeUser((user, done) => {
+ done(null, user.id);
+});
 
-//passport.deserializeUser((id, done) => {
-    //GoogleUser.findById(id).then((user) => {
-   //done(null, user);
-  //});
-//});
+passport.deserializeUser((id, done) => {
+    GoogleUser.findOne({id: profile.id}).then((user) => {
+   done(null, user);
+  });
+});
 
 passport.use(
 new GoogleStrategy({
