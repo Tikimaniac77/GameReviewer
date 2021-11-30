@@ -12,7 +12,7 @@ new GoogleStrategy({
     callbackURL: "/auth/google/redirect",
 }, (accessToken, refreshToken, profile, done) => {
     // TODO: Passport Callback Function
-    User.findOne({id: profile.id}).then((currentUser) => {
+    User.findOne({ where: {id: profile.id } }).then((currentUser) => {
         if(currentUser){
             // already have this user
             console.log('user is: ', currentUser);
