@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const GoogleUser = require ("../models/google-user");
+const User = require ("../models/user");
 //const sequelize = require("../config/connection");
 require('dotenv').config
 
@@ -9,7 +9,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-    GoogleUser.findOne({id: profile.id}).then((user) => {
+    User.findOne({id: profile.id}).then((user) => {
    done(null, user);
   });
 });
@@ -22,19 +22,20 @@ new GoogleStrategy({
     callbackURL: "/auth/google/redirect",
 }, (accessToken, refreshToken, profile, done) => {
     // TODO: Passport Callback Function
-    GoogleUser.findOne({googleId: profile.id}).then((currentUser) => {
+    User.findOne({googleId: profile.id}).then((currentUser) => {
         if(currentUser){
             // already have this user
             console.log('user is: ', currentUser);
-            //done(null, currentUser);
+            done(null, currentUser);
         } else {
             // if not, create user in our
             new GoogleUser({
-                googleId: profile.id,
                 name: profile.displayName,
+                email: profile.email,
+                password: profile.id
             }).save().then((newUser) => {
                 console.log('created new user: ', newUser);
-                //done(null, newUser);
+                done(null, newUser);
             });
         }
     });
