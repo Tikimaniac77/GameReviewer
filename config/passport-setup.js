@@ -23,8 +23,7 @@ new GoogleStrategy({
 }, (accessToken, refreshToken, profile, done) => {
     // TODO: Passport Callback Function
     GoogleUser.findOrCreate({ 
-        where: { googleId: profile.id }, 
-        defaults: {
+        where: {
             googleId: profile.id, 
             name: profile.displayName},
     },
