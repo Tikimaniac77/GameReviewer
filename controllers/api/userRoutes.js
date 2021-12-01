@@ -1,9 +1,34 @@
 const router = require("express").Router();
+const nodemailer = require("nodemailer");
 const { User } = require("../../models");
+require('dotenv').config
 
 router.post("/", async (req, res) => {
   try {
     const userData = await User.create(req.body);
+
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.user,
+        pass: process.env.password,
+      },
+    });
+
+    const mailOptions = {
+      from: "gamereviewer@gmail.com",
+      to: req.body.email,
+      subject: "Game Reviewr Sign Up Confirmation",
+      text: "Thanks for signing up to Game Reviewer. We hope you enjoy the site!",
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email SENT: " + info.response);
+      }
+    });
 
     req.session.save(() => {
       req.session.userID = userData.id;
