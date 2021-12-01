@@ -70,6 +70,8 @@ app.use("/public", express.static(path.join(__dirname, "/../public")));
 app.use("/auth", routes);
 app.use(controlRoutes);
 app.use(express(http));
+app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 // app.get('/',(req,res => {
 //   res.prependListener('homepage')

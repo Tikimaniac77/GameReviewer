@@ -6,6 +6,9 @@ const authCheck = (req, res, next) => {
         res.redirect("/login");
     } else {
         // Continue if logged in
+        req.session.save(() => {
+            req.session.logged_in = true;
+          });
         next();
     }
 };
@@ -14,3 +17,5 @@ router.get("/", authCheck, (req, res) => {
     // Redirect user to homepage
     res.redirect("/")
 })
+
+module.exports = router;
