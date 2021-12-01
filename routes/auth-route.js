@@ -3,7 +3,7 @@ const passport = require('passport');
 
 router.get("/google", passport.authenticate("google", {
     //Handle redirect with passport
-    scope: ["profile"]
+    scope: ['email', 'profile']
 }));
 
 // Callback route for google redirection
