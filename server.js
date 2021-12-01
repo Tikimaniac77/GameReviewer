@@ -68,7 +68,7 @@ app.use("/public", express.static(path.join(__dirname, "/../public")));
 
 // app.use(routes);npm
 app.use("/auth", routes);
-app.use('/profile', profileRoutes);
+app.use('/googleprofile', profileRoutes);
 app.use(controlRoutes);
 app.use(express(http));
 
