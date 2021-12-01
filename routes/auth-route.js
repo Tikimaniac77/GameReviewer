@@ -10,6 +10,9 @@ router.get("/google", passport.authenticate("google", {
 router.get('/google/redirect',  passport.authenticate("google"), (req, res) => {
     // Add a redirection page after user is authenticated
     res.redirect("/");
+    req.session.save(() => {
+        req.session.logged_in = true;
+      });
 
 
 });

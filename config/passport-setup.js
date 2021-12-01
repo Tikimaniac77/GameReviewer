@@ -9,9 +9,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-    GoogleUser.findOne({ where: { id: user.id } }).then((user) => {
         done(null, user);
-    });
 });
 
 passport.use(new GoogleStrategy({
@@ -21,27 +19,7 @@ passport.use(new GoogleStrategy({
         passReqToCallback   : true
         },
     function(request, accessToken, refreshToken, profile, done) {
-    const userData = GoogleUser.findOne({ where: { googleID: profile.id } });
-
-    if (!userData) {
-        new GoogleUser({
-            googleID: profile.id,
-            name: profile.displayName,
-            email: email,
-        }).save().then((newUser) => {
-            done(null, newUser);
-        });
-    }
-
-    req.session.save(() => {
-      req.session.userID = userData.id;
-      req.session.logged_in = true;
-
-      res.json({ user: userData, message: "You are now logged in!" });
-
-    });
-
-    return done(null, userData);
+         return done(null, profile);
   }
 ));
 
