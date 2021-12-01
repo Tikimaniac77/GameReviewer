@@ -17,11 +17,19 @@ GoogleUser.init(
         type: DataTypes.STRING,
         allowNull: false,
       },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
+        },
+      },
       sequelize,
       timestamps: false,
       freezeTableName: true,
       underscored: true,
-      modelName: "user",
+      modelName: "googleuser",
     }
   );
 
