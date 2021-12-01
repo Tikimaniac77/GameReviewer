@@ -5,11 +5,11 @@ const GoogleUser = require('../models/').GoogleUser;
 require('dotenv').config
 
 passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user);
 });
 
-passport.deserializeUser(function(id, done) {
-    GoogleUser.findOne({ where: { id: id } }).then((user) => {
+passport.deserializeUser(function(user, done) {
+    GoogleUser.findOne({ where: { id: user.id } }).then((user) => {
         done(null, user);
     });
 });
